@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 )
@@ -17,9 +18,8 @@ func main() {
 			fmt.Fprintf(writer, "Todo baru telah ditambahkan, %s\n", todoBaru)
 		case "GET":
 			// tampilkan semua todo
-			for _, todo := range todos {
-				fmt.Fprintln(writer, todo)
-			}
+			json.NewEncoder(writer).Encode(todos)
+
 		default:
 			http.Error(writer, "Metode Request tidak diizinkan", http.StatusMethodNotAllowed)
 		}
